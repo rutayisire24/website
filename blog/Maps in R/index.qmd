@@ -10,7 +10,10 @@ categories:
 execute:
   message: False
   warning: False
+  warnng: False
 ---
+
+Github Repo : [HERE](https://github.com/rutayisire24/website/tree/main/blog/Maps%20in%20R)
 
 ## Required Packages
 
@@ -20,15 +23,62 @@ Before starting, install and load these essential R packages. The installation u
 
 if (!require("pacman")) install.packages("pacman")
 
-pacman::p_load(ggplot2, sf, readr, dplyr)
+pacman::p_load(ggplot2, sf, readr, dplyr , here , ggthemes)
 
 ```
 
-## Import  Data 
+## Import Data
 
-The shape files are stored on my github  and you can download them with this code below. 
+The shape files are stored on my github and you can download them with this code below.
 
 ```{r}
 
+##  load shapes
+
+regions_sp <- readr::read_rds( 
+  here('blog/Maps in R/data/regions_sp.rds'))
+
+district_sp <- readr::read_rds(here('blog/Maps in R/data/district_sp.rds'))
+
+water_sp <- readr::read_rds( here('blog/Maps in R/data/water_sp.rds'))
+
 ```
+
+## Uganda's Region Map 
+
+```{r}
+ggplot()+
+  geom_sf(data = regions_sp)
+```
+
+### Theme the Map
+
+```{r}
+
+regions_map <- ggplot()+
+  geom_sf(data = regions_sp, 
+    , color = "black", 
+    fill = "#f8edeb") +
+    geom_sf_label(data = regions_sp, aes(label = F15Regions), size = 1) + # Adjust size as needed
+  theme_map()
+
+regions_map
+```
+
+### Add water bodies 
+
+```{r}
+
+regions_water_map <- ggplot()+
+  geom_sf(data = regions_sp, 
+    , color = "black", 
+    fill = "#f8edeb") +
+    geom_sf_label(data = regions_sp, aes(label = F15Regions), size = 1) +
+    geom_sf(data = water_sp, fill = "#8ecae6", color = "#8ecae6") +# Adjust size as needed
+  theme_map()
+
+regions_water_map 
+
+```
+
 
