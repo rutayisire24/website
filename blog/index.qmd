@@ -1,0 +1,7 @@
+---
+title: "Blog"
+listing:
+  contents: /
+  type: grid
+  max-description-length: 250 
+---

@@ -1,0 +1,15 @@
+{
+  "hash": "c6daf6fffae4c6d0ce68e73f207cc571",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Creating Maps in R: An Introduction\"\ndescription: \"This guide will walk you through the process of creating various types of maps in  R using common packages \"\nauthor: \"Meddy Rutayisire\"\ndate: \"01/10/2024\"\nimage: \"cover.jpg\"\ncategories:\n  - R\n  - Maps\nexecute:\n  message: False\n  warning: False\n---\n\n\n\n## Required Packages\n\nBefore starting, install and load these essential R packages. The installation uses the [Pacman package](https://trinker.github.io/pacman/vignettes/Introduction_to_pacman.html)\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nif (!require(\"pacman\")) install.packages(\"pacman\")\n\npacman::p_load(ggplot2, sf, readr, dplyr)\n```\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

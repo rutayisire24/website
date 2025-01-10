@@ -1,0 +1,18 @@
+---
+title: "Meddy Rutayisire"
+subtitle: "Data Scientist , Epidemiologist"
+image: 1983.jpg
+about: # https://quarto.org/docs/websites/website-about.html
+  template: jolla
+  links:
+    - icon: github
+      text: Github
+      href: https://github.com/rutayisire24
+---
+
+A little bit about me and my R Works . 
+
+
+
+
+

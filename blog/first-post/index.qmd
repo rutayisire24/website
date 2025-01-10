@@ -1,0 +1,34 @@
+---
+title: "Creating Maps in R: An Introduction"
+description: "This guide will walk you through the process of creating various types of maps in  R using common packages "
+author: "Meddy Rutayisire"
+date: "01/10/2024"
+image: "cover.jpg"
+categories:
+  - R
+  - Maps
+execute:
+  message: False
+  warning: False
+---
+
+## Required Packages
+
+Before starting, install and load these essential R packages. The installation uses the [Pacman package](https://trinker.github.io/pacman/vignettes/Introduction_to_pacman.html)
+
+```{r}
+
+if (!require("pacman")) install.packages("pacman")
+
+pacman::p_load(ggplot2, sf, readr, dplyr)
+
+```
+
+## Import  Data 
+
+The shape files are stored on my github  and you can download them with this code below. 
+
+```{r}
+
+```
+
