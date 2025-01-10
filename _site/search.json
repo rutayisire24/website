@@ -61,5 +61,26 @@
     "title": "Creating Maps in R: An Introduction",
     "section": "",
     "text": "Before starting, install and load these essential R packages. The installation uses the Pacman package\n\nif (!require(\"pacman\")) install.packages(\"pacman\")\n\npacman::p_load(ggplot2, sf, readr, dplyr)"
+  },
+  {
+    "objectID": "blog/Maps in R/index.html",
+    "href": "blog/Maps in R/index.html",
+    "title": "Creating Maps in R: An Introduction",
+    "section": "",
+    "text": "Before starting, install and load these essential R packages. The installation uses the Pacman package\n\nif (!require(\"pacman\")) install.packages(\"pacman\")\n\npacman::p_load(ggplot2, sf, readr, dplyr)"
+  },
+  {
+    "objectID": "blog/Maps in R/index.html#required-packages",
+    "href": "blog/Maps in R/index.html#required-packages",
+    "title": "Creating Maps in R: An Introduction",
+    "section": "",
+    "text": "Before starting, install and load these essential R packages. The installation uses the Pacman package\n\nif (!require(\"pacman\")) install.packages(\"pacman\")\n\npacman::p_load(ggplot2, sf, readr, dplyr)"
+  },
+  {
+    "objectID": "blog/Maps in R/index.html#import-data",
+    "href": "blog/Maps in R/index.html#import-data",
+    "title": "Creating Maps in R: An Introduction",
+    "section": "Import Data",
+    "text": "Import Data\nThe shape files are stored on my github and you can download them with this code below."
   }
 ]

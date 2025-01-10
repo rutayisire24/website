@@ -22,5 +22,8 @@
   },
   "blog/index.qmd": {
     "index.html": "1a814e4a"
+  },
+  "blog/Maps in R/index.qmd": {
+    "index.html": "23512b69"
   }
 }
