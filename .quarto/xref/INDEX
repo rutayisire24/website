@@ -25,5 +25,11 @@
   },
   "blog/Maps in R/index.qmd": {
     "index.html": "23512b69"
+  },
+  "blog/Introduction to Functions/index.qmd": {
+    "index.html": "8e711007"
+  },
+  "blog/Maps/index.qmd": {
+    "index.html": "81c68b2d"
   }
 }

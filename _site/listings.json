@@ -1,14 +1,14 @@
 [
   {
-    "listing": "/blog/index.html",
-    "items": [
-      "/blog/Maps in R/index.html",
-      "/blog/second-post/index.html",
-      "/blog/third-post/index.html"
-    ]
-  },
-  {
     "listing": "/projects/index.html",
     "items": []
+  },
+  {
+    "listing": "/blog/index.html",
+    "items": [
+      "/blog/Maps/index.html",
+      "/blog/Introduction to Functions/index.html",
+      "/blog/third-post/index.html"
+    ]
   }
 ]

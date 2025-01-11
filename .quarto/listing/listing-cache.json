@@ -2,9 +2,6 @@
   "listingMap": {
     "projects/index.qmd": [
       "projects.yml"
-    ],
-    "blog/index.qmd": [
-      "/"
     ]
   }
 }

@@ -1,0 +1,31 @@
+---
+title: "Functions: Introduction"
+description: "Create reusable functions in R using map visualization as a practical example"
+author: "Meddy Rutayisire"
+date: "01/01/2024"
+image: "cover.jpg"
+categories:
+  - Functions
+  - R
+  - Maps
+---
+
+## Set up 
+```{r}
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(ggplot2, sf, readr, dplyr, ggthemes)
+
+# Import data
+regions <- "https://raw.githubusercontent.com/rutayisire24/website/main/blog/Maps%20in%20R/data/regions_sp.rds"
+district <- "https://raw.githubusercontent.com/rutayisire24/website/main/blog/Maps%20in%20R/data/district_sp.rds"
+water <- "https://raw.githubusercontent.com/rutayisire24/website/main/blog/Maps%20in%20R/data/water_sp.rds"
+
+regions_sp <- readRDS(url(regions))
+district_sp <- readRDS(url(district))
+water_sp <- readRDS(url(water))
+```
+
+## Creating a Function
+Instead of repeating code for each district map as in the previous blog , let's create a function:
+
+

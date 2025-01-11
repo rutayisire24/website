@@ -13,11 +13,15 @@ execute:
   warnng: False
 ---
 
+
+
 Github Repo : [HERE](https://github.com/rutayisire24/website/tree/main/blog/Maps%20in%20R)
 
 ## Required Packages
 
 Before starting, install and load these essential R packages. The installation uses the [Pacman package](https://trinker.github.io/pacman/vignettes/Introduction_to_pacman.html)
+
+
 
 ```{r}
 
@@ -27,11 +31,15 @@ pacman::p_load(ggplot2, sf, readr, dplyr , here , ggthemes)
 
 ```
 
+
+
 ## Import Data
 
 The shape files are stored on my github and you can download them with this code below.
 
 This demo will use Uganda's shapefiles. 
+
+
 
 ```{r}
 # URLs 
@@ -47,14 +55,22 @@ water_sp <- readRDS(url(water))
 
 ```
 
+
+
 ## Uganda's Region Map 
+
+
 
 ```{r}
 ggplot()+
   geom_sf(data = regions_sp)
 ```
 
+
+
 ### Theme the Map
+
+
 
 ```{r}
 
@@ -68,7 +84,11 @@ regions_map <- ggplot()+
 regions_map
 ```
 
+
+
 ### Add water bodies 
+
+
 
 ```{r}
 
@@ -84,7 +104,11 @@ regions_water_map
 
 ```
 
+
+
 ### Draw a specific Region 
+
+
 ```{r}
 region_interest <- "Bukedi"
 
@@ -99,7 +123,11 @@ spefic_region
 ```
 
 
+
+
 ## Districts
+
+
 
 ```{r}
 
@@ -113,7 +141,11 @@ district_map <- ggplot()+
 district_map 
 ```
 
+
+
 ### Specific District
+
+
 
 ```{r}
 

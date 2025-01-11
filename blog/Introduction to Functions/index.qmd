@@ -1,0 +1,108 @@
+---
+title: "Functions: Introduction"
+description: "Create reusable functions in R using map visualization as a practical example"
+author: "Meddy Rutayisire"
+date: "01/11/2025"
+image: "cover.jpg"
+categories:
+  - Functions
+  - R
+  - Maps
+---
+
+## Set up
+
+```{r}
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(ggplot2, sf, readr, dplyr, ggthemes)
+
+# Import data
+regions <- "https://raw.githubusercontent.com/rutayisire24/website/main/blog/Maps%20in%20R/data/regions_sp.rds"
+district <- "https://raw.githubusercontent.com/rutayisire24/website/main/blog/Maps%20in%20R/data/district_sp.rds"
+water <- "https://raw.githubusercontent.com/rutayisire24/website/main/blog/Maps%20in%20R/data/water_sp.rds"
+
+regions_sp <- readRDS(url(regions))
+district_sp <- readRDS(url(district))
+water_sp <- readRDS(url(water))
+```
+
+## Creating a Function
+
+Instead of repeating code for each district map as in the previous blog , let's create a function:
+
+```{r}
+draw_district_map <- function(district_name) {
+  # Filter data for specific district
+  district_data <- district_sp |> 
+    filter(District == toupper(district_name))
+  
+  # Create map
+  ggplot() +
+    # Add district boundary
+    geom_sf(data = district_data, 
+            color = "black", 
+            fill = "#f8edeb") +
+    # Add district label
+    geom_sf_label(data = district_data, 
+                  aes(label = District), 
+                  size = 4) +
+    # Add title
+    labs(title = paste("Map of", district_name, "District")) +
+    theme_map()
+}
+```
+
+Now we can create maps for any district with a single line:
+
+```{r}
+# Create map for Yumbe district
+draw_district_map("Yumbe")
+
+# Create map for Kampala district
+draw_district_map("Kampala")
+```
+
+## Adding Options
+
+Let's make our function more flexible by adding options.
+
+```{r}
+draw_district_map <- function(district_name, 
+                            fill_color = "#f8edeb",
+                            boundary_color = "black",
+                            label_color = "black",
+                            label_size = 4) {
+  # Filter data
+  district_data <- district_sp |> 
+    filter(District == toupper(district_name))
+  
+  # Create map
+  ggplot() +
+    geom_sf(data = district_data, 
+            color = boundary_color, 
+            fill = fill_color) +
+    geom_sf_label(data = district_data, 
+                  aes(label = District), 
+                  size = label_size,
+                  color = label_color) +
+    labs(title = paste("Map of", district_name, "District")) +
+    theme_map()
+}
+
+
+```
+
+Testing put with custom colors
+
+```{r}
+# Custom colors
+draw_district_map("Moyo", 
+                 fill_color = "#81b29a",
+                 boundary_color = "#264653",
+                 label_color = "#264653",
+                 label_size = 6)
+```
+
+## Further Reading
+
+[HERE](https://r4ds.had.co.nz/functions.html)

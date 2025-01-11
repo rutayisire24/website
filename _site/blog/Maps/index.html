@@ -107,7 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <meta property="og:title" content="Creating Maps in R: An Introduction – Home">
 <meta property="og:description" content="This guide will walk you through the process of creating various types of maps in R using common packages">
-<meta property="og:image" content="https://rmeddy.quarto.pub/rutayisire/blog/Maps in R/cover.jpg">
+<meta property="og:image" content="https://rmeddy.quarto.pub/rutayisire/blog/Maps/cover.jpg">
 <meta property="og:site_name" content="Home">
 </head>
 
@@ -256,7 +256,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> regions_sp, </span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    , <span class="at">color =</span> <span class="st">"black"</span>, </span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"#f8edeb"</span>) <span class="sc">+</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf_label</span>(<span class="at">data =</span> regions_sp, <span class="fu">aes</span>(<span class="at">label =</span> F15Regions), <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf_label</span>(<span class="at">data =</span> regions_sp, <span class="fu">aes</span>(<span class="at">label =</span> F15Regions), <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="at">data =</span> water_sp, <span class="at">fill =</span> <span class="st">"#8ecae6"</span>, <span class="at">color =</span> <span class="st">"#8ecae6"</span>) <span class="sc">+</span><span class="co"># Adjust size as needed</span></span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_map</span>()</span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
