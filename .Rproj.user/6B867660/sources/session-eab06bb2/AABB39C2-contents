@@ -69,14 +69,22 @@ regions_map
 
 ### Download Data 
 
-For this example lets work with the 2024 census Data.  The data is in the github repo. 
+For this example lets work with the 2024 census Data. 
 
 ```{r}
+library(readxl)
+library(here)
 
-poln_url <- "https://raw.githubusercontent.com/rutayisire24/website/main/blog/Maps%20in%20R/data/water_sp.rds"
+population <- read_excel("~/Documents/Open Data Uganda/Census/populaiton.xlsx")
+population <- population |> 
+  select(1:3) |>  # Take first 3 columns
+  rename(
+    district = 1,
+    villages = 2, 
+    poln = 3
+  )
 
-# Read files
-regions_sp <- read_csv(url(regions))
-poln <- 
+write_rds(population, here("blog", "Maps 2", "data", "poln_2024.rds"))
+
 ```
 
