@@ -1,14 +1,13 @@
 [
   {
-    "listing": "/projects/index.html",
-    "items": []
-  },
-  {
     "listing": "/blog/index.html",
     "items": [
       "/blog/Maps/index.html",
-      "/blog/Introduction to Functions/index.html",
-      "/blog/third-post/index.html"
+      "/blog/Introduction to Functions/index.html"
     ]
+  },
+  {
+    "listing": "/projects/index.html",
+    "items": []
   }
 ]

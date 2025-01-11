@@ -4,14 +4,28 @@
     "href": "maps.html",
     "title": "Maps",
     "section": "",
-    "text": "Duis urna urna, pellentesque eu urna ut, malesuada bibendum dolor. Suspendisse potenti. Vivamus ornare, arcu quis molestie ultrices, magna est accumsan augue, auctor vulputate erat quam quis neque. Nullam scelerisque odio vel ultricies facilisis. Ut porta arcu non magna sagittis lacinia. Cras ornare vulputate lectus a tristique. Pellentesque ac arcu congue, rhoncus mi id, dignissim ligula."
+    "text": "Proin sodales neque erat, varius cursus diam tincidunt sit amet. Etiam scelerisque fringilla nisl eu venenatis. Donec sem ipsum, scelerisque ac venenatis quis, hendrerit vel mauris. Praesent semper erat sit amet purus condimentum, sit amet auctor mi feugiat. In hac habitasse platea dictumst. Nunc ac mauris in massa feugiat bibendum id in dui. Praesent accumsan urna at lacinia aliquet. Proin ultricies eu est quis pellentesque. In vel lorem at nisl rhoncus cursus eu quis mi. In eu rutrum ante, quis placerat justo. Etiam euismod nibh nibh, sed elementum nunc imperdiet in. Praesent gravida nunc vel odio lacinia, at tempus nisl placerat. Aenean id ipsum sed est sagittis hendrerit non in tortor."
   },
   {
-    "objectID": "blog/third-post/index.html",
-    "href": "blog/third-post/index.html",
-    "title": "Third Blog Post",
+    "objectID": "blog/index.html",
+    "href": "blog/index.html",
+    "title": "Blog",
     "section": "",
-    "text": "The source for any page in your website could also be a Jupyter Notebook. This one is third-post/index.ipynb.\nHere’s an example I borrowed from the Seaborn docs:\n\nimport seaborn as sns\n\nsns.set_theme(style=\"whitegrid\")\n\n# Load the diamonds dataset\ndiamonds = sns.load_dataset(\"diamonds\")\n\n# Plot the distribution of clarity ratings, conditional on carat\nsns.displot(\n    data=diamonds,\n    x=\"carat\", hue=\"cut\",\n    kind=\"kde\", height=4, aspect=1.5,\n    multiple=\"fill\", clip=(0, None),\n    palette=\"ch:rot=-.25,hue=1,light=.75\",   \n)"
+    "text": "Creating Maps in R: An Introduction\n\n\nThis guide will walk you through the process of creating various types of maps in R using common packages\n\n\n\nMeddy Rutayisire\n\n\nJan 10, 2024\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFunctions: Introduction\n\n\nCreate reusable functions in R using map visualization as a practical example\n\n\n\nMeddy Rutayisire\n\n\nJan 11, 2025\n\n\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Meddy Rutayisire",
+    "section": "",
+    "text": "A little bit about me and my R Works ."
+  },
+  {
+    "objectID": "projects/index.html",
+    "href": "projects/index.html",
+    "title": "Projects",
+    "section": "",
+    "text": "Predicting House Prices with Machine Learning\n\n\n\nPython\n\n\nMachine Learning\n\n\nData Cleaning\n\n\n\nThis project involves using machine learning algorithms to predict house prices based on various features such as location, size, and amenities. It includes data cleaning, feature engineering, and model selection.\n\n\n\nJan 1, 2024\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCustomer Segmentation Using Clustering Techniques\n\n\n\nR\n\n\nMachine Learning\n\n\nClustering\n\n\nStatistical Modelling\n\n\n\nThis project focuses on segmenting customers into different groups based on their purchasing behavior and demographics. It uses clustering algorithms like K-means and hierarchical clustering to identify distinct customer segments.\n\n\n\nApr 1, 2024\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nVisualizing Global CO2 Emissions\n\n\n\nR\n\n\nData Visualization\n\n\nEnvironmental Science\n\n\n\nThis project involves creating visualizations to show trends in global CO2 emissions over time. It includes data extraction from public databases, data cleaning, and using visualization libraries to create interactive charts and graphs.\n\n\n\nJul 1, 2024\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "blog/Maps/index.html",
@@ -49,27 +63,6 @@
     "text": "Districts\n\ndistrict_map &lt;- ggplot()+\n  geom_sf(data = district_sp, \n    , color = \"black\", \n    fill = \"#f8edeb\") +\n    geom_sf(data = water_sp, fill = \"#8ecae6\", color = \"#8ecae6\") +# Adjust size as needed\n  theme_map()\n\ndistrict_map \n\n\n\n\n\n\n\n\n\nSpecific District\n\ndistrict_interest &lt;- \"YUMBE\"\n\ndistrict_map &lt;- ggplot()+\n  geom_sf(data = (district_sp |&gt; filter(District == district_interest)), \n    , color = \"black\", \n    fill = \"#f8edeb\") +\n      geom_sf_label(data = (district_sp |&gt; filter(District == district_interest)), aes(label = District), size = 4) +\n  theme_map()\n\ndistrict_map"
   },
   {
-    "objectID": "projects/index.html",
-    "href": "projects/index.html",
-    "title": "Projects",
-    "section": "",
-    "text": "Predicting House Prices with Machine Learning\n\n\n\nPython\n\n\nMachine Learning\n\n\nData Cleaning\n\n\n\nThis project involves using machine learning algorithms to predict house prices based on various features such as location, size, and amenities. It includes data cleaning, feature engineering, and model selection.\n\n\n\nJan 1, 2024\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCustomer Segmentation Using Clustering Techniques\n\n\n\nR\n\n\nMachine Learning\n\n\nClustering\n\n\nStatistical Modelling\n\n\n\nThis project focuses on segmenting customers into different groups based on their purchasing behavior and demographics. It uses clustering algorithms like K-means and hierarchical clustering to identify distinct customer segments.\n\n\n\nApr 1, 2024\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nVisualizing Global CO2 Emissions\n\n\n\nR\n\n\nData Visualization\n\n\nEnvironmental Science\n\n\n\nThis project involves creating visualizations to show trends in global CO2 emissions over time. It includes data extraction from public databases, data cleaning, and using visualization libraries to create interactive charts and graphs.\n\n\n\nJul 1, 2024\n\n\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Meddy Rutayisire",
-    "section": "",
-    "text": "A little bit about me and my R Works ."
-  },
-  {
-    "objectID": "blog/index.html",
-    "href": "blog/index.html",
-    "title": "Blog",
-    "section": "",
-    "text": "Creating Maps in R: An Introduction\n\n\nThis guide will walk you through the process of creating various types of maps in R using common packages\n\n\n\nMeddy Rutayisire\n\n\nJan 10, 2024\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFunctions: Introduction\n\n\nCreate reusable functions in R using map visualization as a practical example\n\n\n\nMeddy Rutayisire\n\n\nJan 11, 2025\n\n\n\n\n\n\n\n\n\n\n\n\nThird Blog Post\n\n\nAn example post where the source document is a Jupyter Notebook\n\n\n\nAlicia\n\n\nMay 24, 2021\n\n\n\n\n\n\n\n\nNo matching items"
-  },
-  {
     "objectID": "blog/Introduction to Functions/index.html",
     "href": "blog/Introduction to Functions/index.html",
     "title": "Functions: Introduction",
@@ -91,17 +84,17 @@
     "text": "Creating a Function\nInstead of repeating code for each district map as in the previous blog , let’s create a function:\n\ndraw_district_map &lt;- function(district_name) {\n  # Filter data for specific district\n  district_data &lt;- district_sp |&gt; \n    filter(District == toupper(district_name))\n  \n  # Create map\n  ggplot() +\n    # Add district boundary\n    geom_sf(data = district_data, \n            color = \"black\", \n            fill = \"#f8edeb\") +\n    # Add district label\n    geom_sf_label(data = district_data, \n                  aes(label = District), \n                  size = 4) +\n    # Add title\n    labs(title = paste(\"Map of\", district_name, \"District\")) +\n    theme_map()\n}\n\nNow we can create maps for any district with a single line:\n\n# Create map for Yumbe district\ndraw_district_map(\"Yumbe\")\n\n\n\n\n\n\n\n# Create map for Kampala district\ndraw_district_map(\"Kampala\")"
   },
   {
-    "objectID": "blog/Introduction to Functions/index.html#further-reading",
-    "href": "blog/Introduction to Functions/index.html#further-reading",
-    "title": "Functions: Introduction",
-    "section": "Further Reading",
-    "text": "Further Reading\nHERE"
-  },
-  {
     "objectID": "blog/Introduction to Functions/index.html#adding-options",
     "href": "blog/Introduction to Functions/index.html#adding-options",
     "title": "Functions: Introduction",
     "section": "Adding Options",
     "text": "Adding Options\nLet’s make our function more flexible by adding options.\n\ndraw_district_map &lt;- function(district_name, \n                            fill_color = \"#f8edeb\",\n                            boundary_color = \"black\",\n                            label_color = \"black\",\n                            label_size = 4) {\n  # Filter data\n  district_data &lt;- district_sp |&gt; \n    filter(District == toupper(district_name))\n  \n  # Create map\n  ggplot() +\n    geom_sf(data = district_data, \n            color = boundary_color, \n            fill = fill_color) +\n    geom_sf_label(data = district_data, \n                  aes(label = District), \n                  size = label_size,\n                  color = label_color) +\n    labs(title = paste(\"Map of\", district_name, \"District\")) +\n    theme_map()\n}\n\nTesting put with custom colors\n\n# Custom colors\ndraw_district_map(\"Moyo\", \n                 fill_color = \"#81b29a\",\n                 boundary_color = \"#264653\",\n                 label_color = \"#264653\",\n                 label_size = 6)"
+  },
+  {
+    "objectID": "blog/Introduction to Functions/index.html#further-reading",
+    "href": "blog/Introduction to Functions/index.html#further-reading",
+    "title": "Functions: Introduction",
+    "section": "Further Reading",
+    "text": "Further Reading\nHERE"
   }
 ]

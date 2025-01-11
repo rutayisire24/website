@@ -1,0 +1,8 @@
+"0","readr::write_rds(
+  population , ""blog/Maps 2/data/poln_2024.csv""
+)
+"
+"2","Warning: cannot open file 'blog/Maps 2/data/poln_2024.csv': No such file or directory"
+"2","Error in saveRDS(x, con, version = version, refhook = refhook, ascii = text) : 
+  cannot open the connection
+"
