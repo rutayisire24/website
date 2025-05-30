@@ -41,14 +41,13 @@ Github Repo : [HERE](https://github.com/rutayisire24/website/tree/main/blog/Maps
 
 [**Download the Uganda Spatial DuckDB (\~80 MB)**](https://drive.google.com/drive/folders/1RlOzJkWr3efQznkXpF9CT5OdT8bPEeHY?usp=sharing){.btn .btn-primary}
 
-Place the file anywhere on your drive; the R chunks below assume it sits alongside this blog post.
-
-
 
 ## 2 Quick start (R + DBI)
 
 ```{r}
 #| echo: FALSE
+#| eval: false
+
 
 if (!requireNamespace("pacman",    quietly = TRUE)) install.packages("pacman")
 
@@ -60,8 +59,9 @@ con <- dbConnect(duckdb::duckdb(), "~/Documents/R_works/Geo_package/uganda_admin
 ```
 
 ```{r}
-#| echo: TRUE
-#| execute: FALSE
+#| echo: true
+#| eval: false
+
 
 if (!requireNamespace("pacman",    quietly = TRUE)) install.packages("pacman")
 
@@ -76,6 +76,8 @@ pacman::p_load(DBI)
 ## 3 Use‑case A — “Show me what’s inside”
 
 ```{r list-tables}
+#| eval: false
+
 dbGetQuery(con , "SHOW TABLES;")
 ```
 
@@ -105,6 +107,8 @@ ORDER  BY n_facilities DESC;
 ### R execution & preview
 
 ```{r fac-by-level}
+#| eval: false
+
 dbGetQuery(con,"SELECT facility_level, COUNT(*) AS n_facilities\n FROM facility\n GROUP BY facility_level\n ORDER BY n_facilities DESC;") |> 
   head() |> knitr::kable()
 ```
@@ -135,6 +139,8 @@ LIMIT 10;
 ```
 
 ```{r fac-per-million}
+#| eval: false
+
 dbGetQuery(con , "WITH fac AS (
     SELECT s.parent AS district_id, COUNT(*) AS n_fac
     FROM   facility f
