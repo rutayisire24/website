@@ -2,8 +2,10 @@
   {
     "listing": "/blog/index.html",
     "items": [
+      "/blog/Maps 2/index.html",
       "/blog/Maps/index.html",
-      "/blog/Introduction to Functions/index.html"
+      "/blog/Introduction to Functions/index.html",
+      "/blog/duckdb_1/index.html"
     ]
   },
   {

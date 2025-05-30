@@ -1,8 +1,8 @@
 ---
-title: "Creating Maps in R: An Introduction"
-description: "This guide will walk you through the process of creating various types of maps in  R using common packages "
+title: "Adding Data to  Maps in R"
+description: "This guide will walk you how to add data to your Maps "
 author: "Meddy Rutayisire"
-date: "01/10/2024"
+date: "01/13/2025"
 image: "cover.jpg"
 categories:
   - R
@@ -27,23 +27,18 @@ pacman::p_load(ggplot2, sf, readr, dplyr , here , ggthemes)
 
 ```
 
-## Import Data
+## Import Shape Files 
 
-The shape files are stored on my github and you can download them with this code below.
+Similar to the previous blogs , lets load the shape files.
 
-This demo will use Uganda's shapefiles. 
 
 ```{r}
-# URLs 
-regions <- "https://raw.githubusercontent.com/rutayisire24/website/main/blog/Maps%20in%20R/data/regions_sp.rds"
-
-district <- "https://raw.githubusercontent.com/rutayisire24/website/main/blog/Maps%20in%20R/data/district_sp.rds"
-water <- "https://raw.githubusercontent.com/rutayisire24/website/main/blog/Maps%20in%20R/data/water_sp.rds"
-
-# Read files
-regions_sp <- readRDS(url(regions))
-district_sp <- readRDS(url(district))
-water_sp <- readRDS(url(water))
+regions_sp <- read_rds(here(
+  "blog/Maps/data/regions_sp.rds"))
+district_sp <- read_rds(here(
+  "blog/Maps/data/district_sp.rds"))
+water_sp <- read_rds(here(
+  "blog/Maps/data/water_sp.rds"))
 
 ```
 
@@ -68,63 +63,55 @@ regions_map <- ggplot()+
 regions_map
 ```
 
-### Add water bodies 
+### Download Data 
+
+For this example lets work with the 2024 census Data. The data is in the github repo.  
 
 ```{r}
 
-regions_water_map <- ggplot()+
-  geom_sf(data = regions_sp, 
-    , color = "black", 
-    fill = "#f8edeb") +
-    geom_sf_label(data = regions_sp, aes(label = F15Regions), size = 2) +
-    geom_sf(data = water_sp, fill = "#8ecae6", color = "#8ecae6") +# Adjust size as needed
-  theme_map()
-
-regions_water_map 
+poln <- read_rds(here(
+  "blog/Maps 2/data/poln_2024.rds"
+))
 
 ```
 
-### Draw a specific Region 
-```{r}
-region_interest <- "Bukedi"
 
-spefic_region <- ggplot()+
-  geom_sf(data = (regions_sp |> filter(F15Regions == region_interest)), 
-    , color = "black", 
-    fill = "#f8edeb") +
-    geom_sf_label(data = (regions_sp |> filter(F15Regions == region_interest)), aes(label = F15Regions), size = 4) +
-  theme_map()
-
-spefic_region
-```
-
-
-## Districts
+## Explore the Data 
 
 ```{r}
-
-district_map <- ggplot()+
-  geom_sf(data = district_sp, 
-    , color = "black", 
-    fill = "#f8edeb") +
-    geom_sf(data = water_sp, fill = "#8ecae6", color = "#8ecae6") +# Adjust size as needed
-  theme_map()
-
-district_map 
+head(poln, 6)
+sample(poln$district, 10)
 ```
 
-### Specific District
+## Adding Data to Maps
 
 ```{r}
-
-district_interest <- "YUMBE"
-
-district_map <- ggplot()+
-  geom_sf(data = (district_sp |> filter(District == district_interest)), 
-    , color = "black", 
-    fill = "#f8edeb") +
-      geom_sf_label(data = (district_sp |> filter(District == district_interest)), aes(label = District), size = 4) +
-  theme_map()
-
-district_map 
+plot_data <- district_sp |> 
+  left_join(poln , by = join_by(
+    District == district
+  ))
 ```
+
+## Plot the Map
+
+I created bins for the district populations 
+
+```{r}
+ggplot() +
+  geom_sf(data = plot_data, aes(fill = poln)) +
+  scale_fill_gradient2(
+    low = "#FFF7BC",
+    mid = "#FD9C6B",
+    high = "#8B3A2B",
+    midpoint = 2000000,
+    breaks = c(500000, 1000000, 2000000, 3741000),
+    labels = c("500k", "1M", "2M", "3M"),
+    name = "Population"
+  ) +
+  theme_map() +
+  theme(
+    legend.position = "bottom",
+    legend.key.width = unit(2, "cm")
+  )
+```
+

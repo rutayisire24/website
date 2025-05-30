@@ -14,16 +14,17 @@ categories:
 
 ```{r}
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(ggplot2, sf, readr, dplyr, ggthemes)
 
-# Import data
-regions <- "https://raw.githubusercontent.com/rutayisire24/website/main/blog/Maps%20in%20R/data/regions_sp.rds"
-district <- "https://raw.githubusercontent.com/rutayisire24/website/main/blog/Maps%20in%20R/data/district_sp.rds"
-water <- "https://raw.githubusercontent.com/rutayisire24/website/main/blog/Maps%20in%20R/data/water_sp.rds"
+pacman::p_load(ggplot2, sf, readr, dplyr , here , ggthemes)
 
-regions_sp <- readRDS(url(regions))
-district_sp <- readRDS(url(district))
-water_sp <- readRDS(url(water))
+# Read files
+regions_sp <- read_rds(here(
+  "blog/Maps/data/regions_sp.rds"))
+district_sp <- read_rds(here(
+  "blog/Maps/data/district_sp.rds"))
+water_sp <- read_rds(here(
+  "blog/Maps/data/water_sp.rds"))
+
 ```
 
 ## Creating a Function

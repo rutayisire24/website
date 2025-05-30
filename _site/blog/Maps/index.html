@@ -201,19 +201,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="import-data" class="level2">
 <h2 class="anchored" data-anchor-id="import-data">Import Data</h2>
-<p>The shape files are stored on my github and you can download them with this code below.</p>
+<p>The shape files are stored on my github.</p>
 <p>This demo will use Uganda’s shapefiles.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># URLs </span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>regions <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/rutayisire24/website/main/blog/Maps%20in%20R/data/regions_sp.rds"</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>district <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/rutayisire24/website/main/blog/Maps%20in%20R/data/district_sp.rds"</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>water <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/rutayisire24/website/main/blog/Maps%20in%20R/data/water_sp.rds"</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Read files</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>regions_sp <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">url</span>(regions))</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>district_sp <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">url</span>(district))</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>water_sp <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">url</span>(water))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read files</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>regions_sp <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="fu">here</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"blog/Maps/data/regions_sp.rds"</span>))</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>district_sp <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="fu">here</span>(</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"blog/Maps/data/district_sp.rds"</span>))</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>water_sp <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="fu">here</span>(</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"blog/Maps/data/water_sp.rds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="ugandas-region-map" class="level2">

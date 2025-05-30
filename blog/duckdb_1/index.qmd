@@ -1,0 +1,171 @@
+---
+title: "Portable Spartial DB with DuckDB"
+description: "How we built a portable geospatial database  and why it matters"
+author: "Meddy Rutayisire"
+date: "31/05/2025"
+image: "cover.jpg"
+categories:
+  - R
+  - DuckDB
+  - Databases
+execute:
+  message: False
+  warning: False
+  warnng: False
+---
+
+Github Repo : [HERE](https://github.com/rutayisire24/website/tree/main/blog/Maps%20in%20R)
+
+
+## TL;DR
+
+**One portable file** (`uganda_admin.duckdb`) contains every Ugandan region, district, sub‑county, facility point and 2024 UBOS demographics.
+* No server required → open the DB in R, Python, DBeaver or MotherDuck and start querying.
+* Spatial extension gives PostGIS‑like functions (`ST_Contains`, `ST_DistanceSpheroid`, R‑trees) with column‑store speed.
+* This post shows how to download the database, connect from R, and reproduce two health‑equity analyses in \~10 lines of code each.
+
+
+
+## Why DuckDB + Spatial instead of shapefiles in an R package?
+
+| DuckDB                                       | Traditional R‑package data (.rda/GeoPackage) |
+| -------------------------------------------- | -------------------------------------------- |
+| ✔ SQL & spatial joins in‑process (no server) | ❌ Must pull everything into R memory         |
+| ✔ Mutable—append new layers without rebuild  | ❌ Re‑save & re‑install the whole package     |
+| ✔ Handles GB‑scale tables on a laptop        | ❌ Package size becomes unwieldy > 30 MB      |
+| ✔ Cross‑language (R, Python, SQL, dashboard) | ❌ R only unless you export files manually    |
+
+---
+
+## 1 Download
+
+[**Download the Uganda Spatial DuckDB (\~80 MB)**](https://drive.google.com/drive/folders/1RlOzJkWr3efQznkXpF9CT5OdT8bPEeHY?usp=sharing){.btn .btn-primary}
+
+Place the file anywhere on your drive; the R chunks below assume it sits alongside this blog post.
+
+
+
+## 2 Quick start (R + DBI)
+
+```{r}
+#| echo: FALSE
+
+if (!requireNamespace("pacman",    quietly = TRUE)) install.packages("pacman")
+
+pacman::p_load(DBI)
+
+con <- dbConnect(duckdb::duckdb(), "~/Documents/R_works/Geo_package/uganda_admin.duckdb", read_only = TRUE)
+
+
+```
+
+```{r}
+#| echo: TRUE
+#| execute: FALSE
+
+if (!requireNamespace("pacman",    quietly = TRUE)) install.packages("pacman")
+
+pacman::p_load(DBI)
+
+# con <- dbConnect(duckdb::duckdb(), "~/(path)/uganda_admin.duckdb", read_only = TRUE)
+
+```
+
+
+
+## 3 Use‑case A — “Show me what’s inside”
+
+```{r list-tables}
+dbGetQuery(con , "SHOW TABLES;")
+```
+
+Expected output (abridged):
+
+| name                 |
+| -------------------- |
+| district             |
+| districtdemographics |
+| facility             |
+| region               |
+| subcounty            |
+
+
+## 4 Use‑case B — Count facilities by level (nation‑wide)
+
+### SQL
+
+```sql
+SELECT facility_level,
+       COUNT(*) AS n_facilities
+FROM   facility
+GROUP  BY facility_level
+ORDER  BY n_facilities DESC;
+```
+
+### R execution & preview
+
+```{r fac-by-level}
+dbGetQuery(con,"SELECT facility_level, COUNT(*) AS n_facilities\n FROM facility\n GROUP BY facility_level\n ORDER BY n_facilities DESC;") |> 
+  head() |> knitr::kable()
+```
+
+---
+
+## 5 Use‑case C — Facilities per 1M population (slightly richer)
+
+> *Still simple: one JOIN, one derived column.*
+
+```sql
+WITH fac AS (
+    SELECT s.parent AS district_id, COUNT(*) AS n_fac
+    FROM   facility f
+    JOIN   subcounty s ON f.subcounty_id = s.location_id
+    GROUP  BY s.parent
+)
+SELECT d.district_name,
+       fac.n_fac,
+       dd.total_population,
+       ROUND(fac.n_fac * 1e6 / dd.total_population, 1) AS fac_per_million
+FROM   district            d
+JOIN   districtdemographics dd ON d.location_id = dd.district_location_id
+LEFT   JOIN fac             ON d.location_id = fac.district_id
+WHERE  dd.year_of_data = 2024 AND dd.data_source = 'UBOS'
+ORDER  BY fac_per_million ASC
+LIMIT 10;
+```
+
+```{r fac-per-million}
+dbGetQuery(con , "WITH fac AS (
+    SELECT s.parent AS district_id, COUNT(*) AS n_fac
+    FROM   facility f
+    JOIN   subcounty s ON f.subcounty_id = s.location_id
+    GROUP  BY s.parent
+)
+SELECT d.district_name,
+       fac.n_fac,
+       dd.total_population,
+       ROUND(fac.n_fac * 1e6 / dd.total_population, 1) AS fac_per_million
+FROM   district            d
+JOIN   districtdemographics dd ON d.location_id = dd.district_location_id
+LEFT   JOIN fac             ON d.location_id = fac.district_id
+WHERE  dd.year_of_data = 2024 AND dd.data_source = 'UBOS'
+ORDER  BY fac_per_million ASC
+LIMIT 10;")
+
+dbDisconnect(con)
+```
+
+---
+
+## 6 Next steps
+
+| Explore…                                               | Try this SQL                                                   | Why?                        |
+| ------------------------------------------------------ | -------------------------------------------------------------- | --------------------------- |
+| **Which facilities are outside their own sub‑county?** | `SELECT f.location_id … WHERE NOT ST_Contains(s.geom, f.geom)` | Quick geocoding QA          |
+| **Median distance to nearest HC III+**                 | see follow‑up post                                             | Physical accessibility lens |
+| **Convert any table to Parquet**                       | `COPY facility TO 'facility.parquet' (FORMAT 'parquet');`      | Share with Python/Arrow     |
+
+---
+
+
+*Last updated: 2025‑05‑31*

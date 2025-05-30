@@ -31,5 +31,11 @@
   },
   "blog/Maps/index.qmd": {
     "index.html": "81c68b2d"
+  },
+  "blog/Maps 2/index.qmd": {
+    "index.html": "c9bfeaaf"
+  },
+  "blog/duckdb_1/index.qmd": {
+    "index.html": "341747cc"
   }
 }

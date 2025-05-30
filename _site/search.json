@@ -11,21 +11,7 @@
     "href": "blog/index.html",
     "title": "Blog",
     "section": "",
-    "text": "Creating Maps in R: An Introduction\n\n\nThis guide will walk you through the process of creating various types of maps in R using common packages\n\n\n\nMeddy Rutayisire\n\n\nJan 10, 2024\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFunctions: Introduction\n\n\nCreate reusable functions in R using map visualization as a practical example\n\n\n\nMeddy Rutayisire\n\n\nJan 11, 2025\n\n\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Meddy Rutayisire",
-    "section": "",
-    "text": "A little bit about me and my R Works ."
-  },
-  {
-    "objectID": "projects/index.html",
-    "href": "projects/index.html",
-    "title": "Projects",
-    "section": "",
-    "text": "Predicting House Prices with Machine Learning\n\n\n\nPython\n\n\nMachine Learning\n\n\nData Cleaning\n\n\n\nThis project involves using machine learning algorithms to predict house prices based on various features such as location, size, and amenities. It includes data cleaning, feature engineering, and model selection.\n\n\n\nJan 1, 2024\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCustomer Segmentation Using Clustering Techniques\n\n\n\nR\n\n\nMachine Learning\n\n\nClustering\n\n\nStatistical Modelling\n\n\n\nThis project focuses on segmenting customers into different groups based on their purchasing behavior and demographics. It uses clustering algorithms like K-means and hierarchical clustering to identify distinct customer segments.\n\n\n\nApr 1, 2024\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nVisualizing Global CO2 Emissions\n\n\n\nR\n\n\nData Visualization\n\n\nEnvironmental Science\n\n\n\nThis project involves creating visualizations to show trends in global CO2 emissions over time. It includes data extraction from public databases, data cleaning, and using visualization libraries to create interactive charts and graphs.\n\n\n\nJul 1, 2024\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Adding Data to Maps in R\n\n\nThis guide will walk you how to add data to your Maps\n\n\n\nMeddy Rutayisire\n\n\nJan 13, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCreating Maps in R: An Introduction\n\n\nThis guide will walk you through the process of creating various types of maps in R using common packages\n\n\n\nMeddy Rutayisire\n\n\nJan 10, 2024\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFunctions: Introduction\n\n\nCreate reusable functions in R using map visualization as a practical example\n\n\n\nMeddy Rutayisire\n\n\nJan 11, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPortable Spartial DB with DuckDB\n\n\nHow we built a portable geospatial database and why it matters\n\n\n\nMeddy Rutayisire\n\n\nJul 5, 2027\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "blog/Maps/index.html",
@@ -46,7 +32,7 @@
     "href": "blog/Maps/index.html#import-data",
     "title": "Creating Maps in R: An Introduction",
     "section": "Import Data",
-    "text": "Import Data\nThe shape files are stored on my github and you can download them with this code below.\nThis demo will use Uganda’s shapefiles.\n\n# URLs \nregions &lt;- \"https://raw.githubusercontent.com/rutayisire24/website/main/blog/Maps%20in%20R/data/regions_sp.rds\"\n\ndistrict &lt;- \"https://raw.githubusercontent.com/rutayisire24/website/main/blog/Maps%20in%20R/data/district_sp.rds\"\nwater &lt;- \"https://raw.githubusercontent.com/rutayisire24/website/main/blog/Maps%20in%20R/data/water_sp.rds\"\n\n# Read files\nregions_sp &lt;- readRDS(url(regions))\ndistrict_sp &lt;- readRDS(url(district))\nwater_sp &lt;- readRDS(url(water))"
+    "text": "Import Data\nThe shape files are stored on my github.\nThis demo will use Uganda’s shapefiles.\n\n# Read files\nregions_sp &lt;- read_rds(here(\n  \"blog/Maps/data/regions_sp.rds\"))\ndistrict_sp &lt;- read_rds(here(\n  \"blog/Maps/data/district_sp.rds\"))\nwater_sp &lt;- read_rds(here(\n  \"blog/Maps/data/water_sp.rds\"))"
   },
   {
     "objectID": "blog/Maps/index.html#ugandas-region-map",
@@ -63,18 +49,81 @@
     "text": "Districts\n\ndistrict_map &lt;- ggplot()+\n  geom_sf(data = district_sp, \n    , color = \"black\", \n    fill = \"#f8edeb\") +\n    geom_sf(data = water_sp, fill = \"#8ecae6\", color = \"#8ecae6\") +# Adjust size as needed\n  theme_map()\n\ndistrict_map \n\n\n\n\n\n\n\n\n\nSpecific District\n\ndistrict_interest &lt;- \"YUMBE\"\n\ndistrict_map &lt;- ggplot()+\n  geom_sf(data = (district_sp |&gt; filter(District == district_interest)), \n    , color = \"black\", \n    fill = \"#f8edeb\") +\n      geom_sf_label(data = (district_sp |&gt; filter(District == district_interest)), aes(label = District), size = 4) +\n  theme_map()\n\ndistrict_map"
   },
   {
+    "objectID": "projects/index.html",
+    "href": "projects/index.html",
+    "title": "Projects",
+    "section": "",
+    "text": "Predicting House Prices with Machine Learning\n\n\n\nPython\n\n\nMachine Learning\n\n\nData Cleaning\n\n\n\nThis project involves using machine learning algorithms to predict house prices based on various features such as location, size, and amenities. It includes data cleaning, feature engineering, and model selection.\n\n\n\nJan 1, 2024\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCustomer Segmentation Using Clustering Techniques\n\n\n\nR\n\n\nMachine Learning\n\n\nClustering\n\n\nStatistical Modelling\n\n\n\nThis project focuses on segmenting customers into different groups based on their purchasing behavior and demographics. It uses clustering algorithms like K-means and hierarchical clustering to identify distinct customer segments.\n\n\n\nApr 1, 2024\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nVisualizing Global CO2 Emissions\n\n\n\nR\n\n\nData Visualization\n\n\nEnvironmental Science\n\n\n\nThis project involves creating visualizations to show trends in global CO2 emissions over time. It includes data extraction from public databases, data cleaning, and using visualization libraries to create interactive charts and graphs.\n\n\n\nJul 1, 2024\n\n\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Meddy Rutayisire",
+    "section": "",
+    "text": "A little bit about me and my R Works ."
+  },
+  {
+    "objectID": "blog/Maps 2/index.html",
+    "href": "blog/Maps 2/index.html",
+    "title": "Adding Data to Maps in R",
+    "section": "",
+    "text": "Github Repo : HERE"
+  },
+  {
+    "objectID": "blog/Maps 2/index.html#required-packages",
+    "href": "blog/Maps 2/index.html#required-packages",
+    "title": "Adding Data to Maps in R",
+    "section": "Required Packages",
+    "text": "Required Packages\nBefore starting, install and load these essential R packages. The installation uses the Pacman package\n\nif (!require(\"pacman\")) install.packages(\"pacman\")\n\npacman::p_load(ggplot2, sf, readr, dplyr , here , ggthemes)"
+  },
+  {
+    "objectID": "blog/Maps 2/index.html#import-shape-files",
+    "href": "blog/Maps 2/index.html#import-shape-files",
+    "title": "Adding Data to Maps in R",
+    "section": "Import Shape Files",
+    "text": "Import Shape Files\nSimilar to the previous blogs , lets load the shape files.\n\nregions_sp &lt;- read_rds(here(\n  \"blog/Maps/data/regions_sp.rds\"))\ndistrict_sp &lt;- read_rds(here(\n  \"blog/Maps/data/district_sp.rds\"))\nwater_sp &lt;- read_rds(here(\n  \"blog/Maps/data/water_sp.rds\"))"
+  },
+  {
+    "objectID": "blog/Maps 2/index.html#ugandas-region-map",
+    "href": "blog/Maps 2/index.html#ugandas-region-map",
+    "title": "Adding Data to Maps in R",
+    "section": "Uganda’s Region Map",
+    "text": "Uganda’s Region Map\n\nggplot()+\n  geom_sf(data = regions_sp)\n\n\n\n\n\n\n\n\n\nTheme the Map\n\nregions_map &lt;- ggplot()+\n  geom_sf(data = regions_sp, \n    , color = \"black\", \n    fill = \"#f8edeb\") +\n    geom_sf_label(data = regions_sp, aes(label = F15Regions), size = 1) + # Adjust size as needed\n  theme_map()\n\nregions_map\n\n\n\n\n\n\n\n\n\n\nDownload Data\nFor this example lets work with the 2024 census Data. The data is in the github repo.\n\npoln &lt;- read_rds(here(\n  \"blog/Maps 2/data/poln_2024.rds\"\n))"
+  },
+  {
+    "objectID": "blog/Maps 2/index.html#explore-the-data",
+    "href": "blog/Maps 2/index.html#explore-the-data",
+    "title": "Adding Data to Maps in R",
+    "section": "Explore the Data",
+    "text": "Explore the Data\n\nhead(poln, 6)\n\n# A tibble: 6 × 3\n  district villages   poln\n  &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;\n1 ABIM          576 161100\n2 ADJUMANI      211 179000\n3 AGAGO        1147 292000\n4 ALEBTONG      726 255800\n5 AMOLATAR      581 139500\n6 AMUDAT        416 286800\n\nsample(poln$district, 10)\n\n [1] \"SIRONKO\"     \"KISORO\"      \"KITGUM\"      \"KYENJOJO\"    \"BUNYANGABU\" \n [6] \"KIBAALE\"     \"NTOROKO\"     \"KABERAMAIDO\" \"BUDUDA\"      \"KAABONG\""
+  },
+  {
+    "objectID": "blog/Maps 2/index.html#adding-data-to-maps",
+    "href": "blog/Maps 2/index.html#adding-data-to-maps",
+    "title": "Adding Data to Maps in R",
+    "section": "Adding Data to Maps",
+    "text": "Adding Data to Maps\n\nplot_data &lt;- district_sp |&gt; \n  left_join(poln , by = join_by(\n    District == district\n  ))"
+  },
+  {
+    "objectID": "blog/Maps 2/index.html#plot-the-map",
+    "href": "blog/Maps 2/index.html#plot-the-map",
+    "title": "Adding Data to Maps in R",
+    "section": "Plot the Map",
+    "text": "Plot the Map\nI created bins for the district populations\n\nggplot() +\n  geom_sf(data = plot_data, aes(fill = poln)) +\n  scale_fill_gradient2(\n    low = \"#FFF7BC\",\n    mid = \"#FD9C6B\",\n    high = \"#8B3A2B\",\n    midpoint = 2000000,\n    breaks = c(500000, 1000000, 2000000, 3741000),\n    labels = c(\"500k\", \"1M\", \"2M\", \"3M\"),\n    name = \"Population\"\n  ) +\n  theme_map() +\n  theme(\n    legend.position = \"bottom\",\n    legend.key.width = unit(2, \"cm\")\n  )"
+  },
+  {
     "objectID": "blog/Introduction to Functions/index.html",
     "href": "blog/Introduction to Functions/index.html",
     "title": "Functions: Introduction",
     "section": "",
-    "text": "if (!require(\"pacman\")) install.packages(\"pacman\")\n\nLoading required package: pacman\n\npacman::p_load(ggplot2, sf, readr, dplyr, ggthemes)\n\n# Import data\nregions &lt;- \"https://raw.githubusercontent.com/rutayisire24/website/main/blog/Maps%20in%20R/data/regions_sp.rds\"\ndistrict &lt;- \"https://raw.githubusercontent.com/rutayisire24/website/main/blog/Maps%20in%20R/data/district_sp.rds\"\nwater &lt;- \"https://raw.githubusercontent.com/rutayisire24/website/main/blog/Maps%20in%20R/data/water_sp.rds\"\n\nregions_sp &lt;- readRDS(url(regions))\ndistrict_sp &lt;- readRDS(url(district))\nwater_sp &lt;- readRDS(url(water))"
+    "text": "if (!require(\"pacman\")) install.packages(\"pacman\")\n\nLoading required package: pacman\n\npacman::p_load(ggplot2, sf, readr, dplyr , here , ggthemes)\n\n# Read files\nregions_sp &lt;- read_rds(here(\n  \"blog/Maps/data/regions_sp.rds\"))\ndistrict_sp &lt;- read_rds(here(\n  \"blog/Maps/data/district_sp.rds\"))\nwater_sp &lt;- read_rds(here(\n  \"blog/Maps/data/water_sp.rds\"))"
   },
   {
     "objectID": "blog/Introduction to Functions/index.html#set-up",
     "href": "blog/Introduction to Functions/index.html#set-up",
     "title": "Functions: Introduction",
     "section": "",
-    "text": "if (!require(\"pacman\")) install.packages(\"pacman\")\n\nLoading required package: pacman\n\npacman::p_load(ggplot2, sf, readr, dplyr, ggthemes)\n\n# Import data\nregions &lt;- \"https://raw.githubusercontent.com/rutayisire24/website/main/blog/Maps%20in%20R/data/regions_sp.rds\"\ndistrict &lt;- \"https://raw.githubusercontent.com/rutayisire24/website/main/blog/Maps%20in%20R/data/district_sp.rds\"\nwater &lt;- \"https://raw.githubusercontent.com/rutayisire24/website/main/blog/Maps%20in%20R/data/water_sp.rds\"\n\nregions_sp &lt;- readRDS(url(regions))\ndistrict_sp &lt;- readRDS(url(district))\nwater_sp &lt;- readRDS(url(water))"
+    "text": "if (!require(\"pacman\")) install.packages(\"pacman\")\n\nLoading required package: pacman\n\npacman::p_load(ggplot2, sf, readr, dplyr , here , ggthemes)\n\n# Read files\nregions_sp &lt;- read_rds(here(\n  \"blog/Maps/data/regions_sp.rds\"))\ndistrict_sp &lt;- read_rds(here(\n  \"blog/Maps/data/district_sp.rds\"))\nwater_sp &lt;- read_rds(here(\n  \"blog/Maps/data/water_sp.rds\"))"
   },
   {
     "objectID": "blog/Introduction to Functions/index.html#creating-a-function",
@@ -96,5 +145,75 @@
     "title": "Functions: Introduction",
     "section": "Further Reading",
     "text": "Further Reading\nHERE"
+  },
+  {
+    "objectID": "blog/duckdb_1/index.html",
+    "href": "blog/duckdb_1/index.html",
+    "title": "Portable Spartial DB with DuckDB",
+    "section": "",
+    "text": "Github Repo : HERE"
+  },
+  {
+    "objectID": "blog/duckdb_1/index.html#tldr",
+    "href": "blog/duckdb_1/index.html#tldr",
+    "title": "Portable Spartial DB with DuckDB",
+    "section": "TL;DR",
+    "text": "TL;DR\nOne portable file (uganda_admin.duckdb) contains every Ugandan region, district, sub‑county, facility point and 2024 UBOS demographics. * No server required → open the DB in R, Python, DBeaver or MotherDuck and start querying. * Spatial extension gives PostGIS‑like functions (ST_Contains, ST_DistanceSpheroid, R‑trees) with column‑store speed. * This post shows how to download the database, connect from R, and reproduce two health‑equity analyses in ~10 lines of code each."
+  },
+  {
+    "objectID": "blog/duckdb_1/index.html#why-duckdb-spatial-instead-of-shapefiles-in-an-r-package",
+    "href": "blog/duckdb_1/index.html#why-duckdb-spatial-instead-of-shapefiles-in-an-r-package",
+    "title": "Portable Spartial DB with DuckDB",
+    "section": "Why DuckDB + Spatial instead of shapefiles in an R package?",
+    "text": "Why DuckDB + Spatial instead of shapefiles in an R package?\n\n\n\n\n\n\n\nDuckDB\nTraditional R‑package data (.rda/GeoPackage)\n\n\n\n\n✔ SQL & spatial joins in‑process (no server)\n❌ Must pull everything into R memory\n\n\n✔ Mutable—append new layers without rebuild\n❌ Re‑save & re‑install the whole package\n\n\n✔ Handles GB‑scale tables on a laptop\n❌ Package size becomes unwieldy &gt; 30 MB\n\n\n✔ Cross‑language (R, Python, SQL, dashboard)\n❌ R only unless you export files manually"
+  },
+  {
+    "objectID": "blog/duckdb_1/index.html#download",
+    "href": "blog/duckdb_1/index.html#download",
+    "title": "Portable Spartial DB with DuckDB",
+    "section": "1 Download",
+    "text": "1 Download\nDownload the Uganda Spatial DuckDB (~80 MB)\nPlace the file anywhere on your drive; the R chunks below assume it sits alongside this blog post."
+  },
+  {
+    "objectID": "blog/duckdb_1/index.html#quick-start-r-dbi",
+    "href": "blog/duckdb_1/index.html#quick-start-r-dbi",
+    "title": "Portable Spartial DB with DuckDB",
+    "section": "2 Quick start (R + DBI)",
+    "text": "2 Quick start (R + DBI)\n\nif (!requireNamespace(\"pacman\",    quietly = TRUE)) install.packages(\"pacman\")\n\npacman::p_load(DBI)\n\n# con &lt;- dbConnect(duckdb::duckdb(), \"~/(path)/uganda_admin.duckdb\", read_only = TRUE)"
+  },
+  {
+    "objectID": "blog/duckdb_1/index.html#usecase-a-show-me-whats-inside",
+    "href": "blog/duckdb_1/index.html#usecase-a-show-me-whats-inside",
+    "title": "Portable Spartial DB with DuckDB",
+    "section": "3 Use‑case A — “Show me what’s inside”",
+    "text": "3 Use‑case A — “Show me what’s inside”\n\ndbGetQuery(con , \"SHOW TABLES;\")\n\n                  name\n1 DistrictDemographics\n2             district\n3             facility\n4   masterfile_staging\n5               region\n6            subcounty\n\n\nExpected output (abridged):\n\n\n\nname\n\n\n\n\ndistrict\n\n\ndistrictdemographics\n\n\nfacility\n\n\nregion\n\n\nsubcounty"
+  },
+  {
+    "objectID": "blog/duckdb_1/index.html#usecase-b-count-facilities-by-level-nationwide",
+    "href": "blog/duckdb_1/index.html#usecase-b-count-facilities-by-level-nationwide",
+    "title": "Portable Spartial DB with DuckDB",
+    "section": "4 Use‑case B — Count facilities by level (nation‑wide)",
+    "text": "4 Use‑case B — Count facilities by level (nation‑wide)\n\nSQL\nSELECT facility_level,\n       COUNT(*) AS n_facilities\nFROM   facility\nGROUP  BY facility_level\nORDER  BY n_facilities DESC;\n\n\nR execution & preview\n\ndbGetQuery(con,\"SELECT facility_level, COUNT(*) AS n_facilities\\n FROM facility\\n GROUP BY facility_level\\n ORDER BY n_facilities DESC;\") |&gt; \n  head() |&gt; knitr::kable()\n\n\n\n\nfacility_level\nn_facilities\n\n\n\n\nHC II\n5109\n\n\nHC III\n2139\n\n\nClinic\n562\n\n\nHC IV\n272\n\n\nGeneral Hospital\n198\n\n\nDrug Shop\n133"
+  },
+  {
+    "objectID": "blog/duckdb_1/index.html#usecase-c-facilities-per-1m-population-slightly-richer",
+    "href": "blog/duckdb_1/index.html#usecase-c-facilities-per-1m-population-slightly-richer",
+    "title": "Portable Spartial DB with DuckDB",
+    "section": "5 Use‑case C — Facilities per 1M population (slightly richer)",
+    "text": "5 Use‑case C — Facilities per 1M population (slightly richer)\n\nStill simple: one JOIN, one derived column.\n\nWITH fac AS (\n    SELECT s.parent AS district_id, COUNT(*) AS n_fac\n    FROM   facility f\n    JOIN   subcounty s ON f.subcounty_id = s.location_id\n    GROUP  BY s.parent\n)\nSELECT d.district_name,\n       fac.n_fac,\n       dd.total_population,\n       ROUND(fac.n_fac * 1e6 / dd.total_population, 1) AS fac_per_million\nFROM   district            d\nJOIN   districtdemographics dd ON d.location_id = dd.district_location_id\nLEFT   JOIN fac             ON d.location_id = fac.district_id\nWHERE  dd.year_of_data = 2024 AND dd.data_source = 'UBOS'\nORDER  BY fac_per_million ASC\nLIMIT 10;\n\ndbGetQuery(con , \"WITH fac AS (\n    SELECT s.parent AS district_id, COUNT(*) AS n_fac\n    FROM   facility f\n    JOIN   subcounty s ON f.subcounty_id = s.location_id\n    GROUP  BY s.parent\n)\nSELECT d.district_name,\n       fac.n_fac,\n       dd.total_population,\n       ROUND(fac.n_fac * 1e6 / dd.total_population, 1) AS fac_per_million\nFROM   district            d\nJOIN   districtdemographics dd ON d.location_id = dd.district_location_id\nLEFT   JOIN fac             ON d.location_id = fac.district_id\nWHERE  dd.year_of_data = 2024 AND dd.data_source = 'UBOS'\nORDER  BY fac_per_million ASC\nLIMIT 10;\")\n\n        district_name n_fac total_population fac_per_million\n1  Nabilatuk District     6           136785            43.9\n2     Soroti District    16           305971            52.3\n3      Yumbe District    60           945100            63.5\n4     Amudat District    13           203358            63.9\n5    Buyende District    27           403486            66.9\n6     Masaka District    20           294166            68.0\n7       Arua District    11           159722            68.9\n8    Manafwa District    13           186917            69.5\n9       Lira District    17           242216            70.2\n10  Alebtong District    21           283509            74.1\n\ndbDisconnect(con)"
+  },
+  {
+    "objectID": "blog/duckdb_1/index.html#next-steps",
+    "href": "blog/duckdb_1/index.html#next-steps",
+    "title": "Portable Spartial DB with DuckDB",
+    "section": "6 Next steps",
+    "text": "6 Next steps\n\n\n\n\n\n\n\n\nExplore…\nTry this SQL\nWhy?\n\n\n\n\nWhich facilities are outside their own sub‑county?\nSELECT f.location_id … WHERE NOT ST_Contains(s.geom, f.geom)\nQuick geocoding QA\n\n\nMedian distance to nearest HC III+\nsee follow‑up post\nPhysical accessibility lens\n\n\nConvert any table to Parquet\nCOPY facility TO 'facility.parquet' (FORMAT 'parquet');\nShare with Python/Arrow\n\n\n\n\nLast updated: 2025‑05‑31"
+  },
+  {
+    "objectID": "blog/duckdb_1/index.html#limitations",
+    "href": "blog/duckdb_1/index.html#limitations",
+    "title": "Portable Spartial DB with DuckDB",
+    "section": "7 Limitations",
+    "text": "7 Limitations\n\nKeep all layers in EPSG 4326 (mixed SRID unsupported).\nRaster data still out‑of‑scope (vector only).\nR‑tree becomes stale after big inserts—bulk‑load first, then CALL Spatial_CreateSpatialIndex().\n\n\nLast updated: 2025‑05‑31"
   }
 ]
