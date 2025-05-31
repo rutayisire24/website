@@ -76,9 +76,9 @@ Expected output (abridged):
 ```{r}
 #| eval: false
 
-pacman::p_load(sf,gplot2)
+pacman::p_load(sf,ggplot2)
 
-DBI::dbExecute(con, "INSTALL spatial; LOAD spatial;")
+DBI::dbExecute(con, "LOAD spatial;")
 
 
 districts_raw_data <-  dbGetQuery( con , "SELECT
@@ -115,7 +115,7 @@ ggplot(data = districts_sf) +
 #| eval: false
 
 
-DBI::dbExecute(con, "INSTALL spatial; LOAD spatial;")
+DBI::dbExecute(con, "LOAD spatial;")
 
 ## Load districts 
 districts_acholi <- dbGetQuery(con, "
@@ -175,7 +175,6 @@ facilities_sf <- sf::st_as_sf(
 
 
 ## Plot all three layers
-library(ggplot2) 
 
 ggplot() +
   geom_sf(data = districts_sf,   fill = NA, color = '#495057', linewidth = 0.4) +
@@ -228,10 +227,12 @@ dbDisconnect(con)
 
 ## Next Steps
 
-This single file saves alot of time as I can easily run joins and filters across Uganda's hierarchy.
+This single file saves a lot of time as I can easily run joins and filters across Uganda's hierarchy.
 
-Next I am hoping to add Population projections , Other naming conventions , water Parishes and Villages.
+Next I am hoping to add Population projections , Other naming conventions , Water ,Parishes and Villages.
 
-I might need to optimize the code too. ( not sure why i need to load spatial at each query )
+I might need to optimize the code too. ( not sure why I need to load spatial extension at each query )
 
-This work is borrows heavily on work done Adaptive Malaria Control [HERE](https://faculty.washington.edu/smitdave/uganda/spatial.html)
+This work is borrows heavily on work done by Adaptive Malaria Control , Uganda .
+
+Read more about it [HERE](https://faculty.washington.edu/smitdave/uganda/spatial.html)
