@@ -1,53 +1,34 @@
 ---
 title: "Portable Spartial DB with DuckDB"
-description: "How we built a portable geospatial database  and why it matters"
 author: "Meddy Rutayisire"
-date: "31/05/2025"
+date: "05/31/2025"
 image: "cover.jpg"
 categories:
   - R
   - DuckDB
   - Databases
+  - Maps
 execute:
   message: False
   warning: False
   warnng: False
 ---
 
-Github Repo : [HERE](https://github.com/rutayisire24/website/tree/main/blog/Maps%20in%20R)
+My recent journey into the world of relational databases has really reshaped how I think. I have been thinking of use case for my day to day work.
 
+For a long time, my workflow often involved navigating scattered messy collection of shape files with different column and org unit names. Every map starts with repetitive renaming and imports.
 
-## TL;DR
-
-**One portable file** (`uganda_admin.duckdb`) contains every Ugandan region, district, sub‑county, facility point and 2024 UBOS demographics.
-* No server required → open the DB in R, Python, DBeaver or MotherDuck and start querying.
-* Spatial extension gives PostGIS‑like functions (`ST_Contains`, `ST_DistanceSpheroid`, R‑trees) with column‑store speed.
-* This post shows how to download the database, connect from R, and reproduce two health‑equity analyses in \~10 lines of code each.
-
-
-
-## Why DuckDB + Spatial instead of shapefiles in an R package?
-
-| DuckDB                                       | Traditional R‑package data (.rda/GeoPackage) |
-| -------------------------------------------- | -------------------------------------------- |
-| ✔ SQL & spatial joins in‑process (no server) | ❌ Must pull everything into R memory         |
-| ✔ Mutable—append new layers without rebuild  | ❌ Re‑save & re‑install the whole package     |
-| ✔ Handles GB‑scale tables on a laptop        | ❌ Package size becomes unwieldy > 30 MB      |
-| ✔ Cross‑language (R, Python, SQL, dashboard) | ❌ R only unless you export files manually    |
-
----
+This inspired me to set up a simple portable DB for all these spartial files and the associated demograhics. DuckDB makes this process surprisingly accessible and easy. In case its the first time reading about DuckDB , start [`HERE`](https://duckdb.org/why_duckdb.html).
 
 ## 1 Download
 
-[**Download the Uganda Spatial DuckDB (\~80 MB)**](https://drive.google.com/drive/folders/1RlOzJkWr3efQznkXpF9CT5OdT8bPEeHY?usp=sharing){.btn .btn-primary}
-
+[**Download the Uganda Spatial DuckDB (\~30 MB)**](https://drive.google.com/drive/folders/1RlOzJkWr3efQznkXpF9CT5OdT8bPEeHY?usp=sharing){.btn .btn-primary}
 
 ## 2 Quick start (R + DBI)
 
 ```{r}
 #| echo: FALSE
 #| eval: false
-
 
 if (!requireNamespace("pacman",    quietly = TRUE)) install.packages("pacman")
 
@@ -67,13 +48,12 @@ if (!requireNamespace("pacman",    quietly = TRUE)) install.packages("pacman")
 
 pacman::p_load(DBI)
 
+#replace with the path you have stored the .duckdb
 # con <- dbConnect(duckdb::duckdb(), "~/(path)/uganda_admin.duckdb", read_only = TRUE)
 
 ```
 
-
-
-## 3 Use‑case A — “Show me what’s inside”
+## Use‑case— “Show me what’s inside”
 
 ```{r list-tables}
 #| eval: false
@@ -84,59 +64,143 @@ dbGetQuery(con , "SHOW TABLES;")
 Expected output (abridged):
 
 | name                 |
-| -------------------- |
+|----------------------|
 | district             |
 | districtdemographics |
 | facility             |
 | region               |
 | subcounty            |
 
+## Use‑case — “Plot Districts”
 
-## 4 Use‑case B — Count facilities by level (nation‑wide)
+```{r}
+#| eval: false
 
-### SQL
+pacman::p_load(sf,gplot2)
 
-```sql
-SELECT facility_level,
-       COUNT(*) AS n_facilities
-FROM   facility
-GROUP  BY facility_level
-ORDER  BY n_facilities DESC;
+DBI::dbExecute(con, "INSTALL spatial; LOAD spatial;")
+
+
+districts_raw_data <-  dbGetQuery( con , "SELECT
+    location_id,
+    district_name,
+    ST_AsText(geom) AS wkt_geom   -- convert geometry → WKT string 
+  FROM district;")
+
+
+districts_sf <- st_as_sf(districts_raw_data, wkt = "wkt_geom", crs = 4326) 
+
+## Plot the Map
+
+ggplot(data = districts_sf) +
+    geom_sf(fill ="#cdb4db" ,color = "white", linewidth = 0.2) + 
+    labs(
+      title = "District Boundaries of Uganda",
+      caption = paste("Data Source: DuckDB | Plotted:", Sys.Date())
+    ) +
+    ggthemes::theme_map(base_size = 12) +
+    theme(
+      legend.position = "none", 
+      plot.title = element_text(hjust = 0.5, face = "bold"),
+      plot.subtitle = element_text(hjust = 0.5)
+    )
+
 ```
 
-### R execution & preview
+![](maps.png){fig-align="center"}
+
+## Use‑case — “Plot Health Facilities in Acholi Region”
+
+```{r}
+#| eval: false
+
+
+DBI::dbExecute(con, "INSTALL spatial; LOAD spatial;")
+
+## Load districts 
+districts_acholi <- dbGetQuery(con, "
+  SELECT d.location_id,
+         d.district_name,
+         ST_AsText(d.geom) AS wkt_geom
+  FROM   district d
+  JOIN   region r ON d.parent = r.location_id
+  WHERE  r.region_name = 'Acholi';
+")
+
+districts_sf <- sf::st_as_sf(districts_acholi, wkt = 'wkt_geom', crs = 4326)
+
+## Sub‑counties inside those districts
+subcounties_acholi <- dbGetQuery(con, "
+  SELECT s.location_id,
+         s.subcounty_name,
+         ST_AsText(s.geom) AS wkt_geom
+  FROM   subcounty s
+  WHERE  s.parent IN (
+    SELECT location_id
+    FROM   district
+    WHERE  parent IN (SELECT location_id FROM region WHERE region_name = 'Acholi')
+  );
+")
+
+subcounties_sf <- sf::st_as_sf(subcounties_acholi |> tidyr::drop_na(), wkt = 'wkt_geom', crs = 4326)
+
+## Facility points inside Acholi
+facilities_acholi <- dbGetQuery(con, "
+  SELECT f.location_id,
+         f.facility_name,
+        f.facility_level,
+        f.longitude,
+        f.latitude
+  FROM   facility f
+  WHERE  f.subcounty_id IN (
+    SELECT location_id
+    FROM   subcounty
+    WHERE  parent IN (
+      SELECT location_id
+      FROM   district
+      WHERE  parent IN (
+        SELECT location_id FROM region WHERE region_name = 'Acholi'
+      )
+    )
+  );
+")
+
+facilities_sf <- sf::st_as_sf(
+  facilities_acholi|> tidyr::drop_na(),
+  coords = c('longitude', 'latitude'),
+  crs    = 4326,
+  remove = FALSE 
+)
+
+
+
+## Plot all three layers
+library(ggplot2) 
+
+ggplot() +
+  geom_sf(data = districts_sf,   fill = NA, color = '#495057', linewidth = 0.4) +
+  geom_sf(data = subcounties_sf, fill = NA, color = '#adb5bd', linewidth = 0.2) +
+  geom_sf(data = facilities_sf, aes(color = facility_level), size = 1.2) +
+  scale_color_brewer(palette = 'Set1', name = 'Facility level') +
+  labs(
+    title    = 'Health Facilities in Acholi Region',
+    subtitle = 'District and Sub county boundaries overlaid with facility points')+
+  ggthemes::theme_map(base_size = 12) +
+  theme(legend.position = 'bottom')
+  
+```
+
+![](acholi.png){fig-align="center"}
+
+## Use‑case — Count facilities by level (nation‑wide)
 
 ```{r fac-by-level}
 #| eval: false
 
-dbGetQuery(con,"SELECT facility_level, COUNT(*) AS n_facilities\n FROM facility\n GROUP BY facility_level\n ORDER BY n_facilities DESC;") |> 
-  head() |> knitr::kable()
+dbGetQuery(con, "SELECT facility_level, COUNT(*) AS n_facilities\n FROM facility  GROUP BY facility_level  ORDER BY n_facilities DESC; ") 
 ```
 
----
-
-## 5 Use‑case C — Facilities per 1M population (slightly richer)
-
-> *Still simple: one JOIN, one derived column.*
-
-```sql
-WITH fac AS (
-    SELECT s.parent AS district_id, COUNT(*) AS n_fac
-    FROM   facility f
-    JOIN   subcounty s ON f.subcounty_id = s.location_id
-    GROUP  BY s.parent
-)
-SELECT d.district_name,
-       fac.n_fac,
-       dd.total_population,
-       ROUND(fac.n_fac * 1e6 / dd.total_population, 1) AS fac_per_million
-FROM   district            d
-JOIN   districtdemographics dd ON d.location_id = dd.district_location_id
-LEFT   JOIN fac             ON d.location_id = fac.district_id
-WHERE  dd.year_of_data = 2024 AND dd.data_source = 'UBOS'
-ORDER  BY fac_per_million ASC
-LIMIT 10;
-```
+## Use‑case — Facilities per 1M population
 
 ```{r fac-per-million}
 #| eval: false
@@ -158,20 +222,16 @@ WHERE  dd.year_of_data = 2024 AND dd.data_source = 'UBOS'
 ORDER  BY fac_per_million ASC
 LIMIT 10;")
 
+# always disconnect after use 
 dbDisconnect(con)
 ```
 
----
+## Next Steps
 
-## 6 Next steps
+This single file saves alot of time as I can easily run joins and filters across Uganda's hierarchy.
 
-| Explore…                                               | Try this SQL                                                   | Why?                        |
-| ------------------------------------------------------ | -------------------------------------------------------------- | --------------------------- |
-| **Which facilities are outside their own sub‑county?** | `SELECT f.location_id … WHERE NOT ST_Contains(s.geom, f.geom)` | Quick geocoding QA          |
-| **Median distance to nearest HC III+**                 | see follow‑up post                                             | Physical accessibility lens |
-| **Convert any table to Parquet**                       | `COPY facility TO 'facility.parquet' (FORMAT 'parquet');`      | Share with Python/Arrow     |
+Next I am hoping to add Population projections , Other naming conventions , water Parishes and Villages.
 
----
+I might need to optimize the code too. ( not sure why i need to load spatial at each query )
 
-
-*Last updated: 2025‑05‑31*
+This work is borrows heavily on work done Adaptive Malaria Control [HERE](https://faculty.washington.edu/smitdave/uganda/spatial.html)
